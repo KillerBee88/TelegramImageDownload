@@ -18,8 +18,8 @@ pip install -r requirements.txt
 2. Добавить в него следующие переменные:
 
 ```shell
-TG_BOT_API=<API ключ Telegram бота>
-NASA_API_KEY=<API ключ от NASA>
+TG_BOT_API='API ключ Telegram бота'
+NASA_API_KEY='API ключ от NASA'
 ```
 
 ## Скрипты 
