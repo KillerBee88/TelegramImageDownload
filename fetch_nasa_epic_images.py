@@ -8,6 +8,7 @@ import os
 load_dotenv()
 API_KEY = os.getenv('NASA_API_KEY')
 
+
 def fetch_nasa_epic_images(api_key, days):
     image_urls = []
     base_url = "https://api.nasa.gov/EPIC/archive/natural/"
