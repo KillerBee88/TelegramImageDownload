@@ -7,6 +7,7 @@ import os
 load_dotenv()
 API_KEY = os.getenv('NASA_API_KEY')
 
+
 def fetch_nasa_apod_images(api_key, count):
     response = requests.get(f'https://api.nasa.gov/planetary/apod?api_key={api_key}&count={count}')
     response.raise_for_status()
