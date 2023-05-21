@@ -3,11 +3,13 @@ from urllib.parse import unquote, urlsplit
 from os.path import splitext
 import requests
 
+
 def get_extension_from_url(url):
     parsed_url = urlsplit(url)
     path = unquote(parsed_url.path)
     extension = splitext(path)[1]
     return extension
+
 
 def download_images(image_urls, save_dir='images'):
     os.makedirs(save_dir, exist_ok=True)
