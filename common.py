@@ -11,14 +11,18 @@ def get_extension_from_url(url):
     return extension
 
 
-def download_images(image_urls, save_dir='images'):
+def download_image(url, save_dir='images'):
     os.makedirs(save_dir, exist_ok=True)
+    extension = get_extension_from_url(url)
+    if extension.lower() not in ['.jpg', '.jpeg', '.png']:
+        return
+    response = requests.get(url)
+    response.raise_for_status()
+    image_name = url.split('/')[-1]
+    with open(os.path.join(save_dir, image_name), 'wb') as f:
+        f.write(response.content)
+
+
+def download_images(image_urls, save_dir='images'):
     for url in image_urls:
-        extension = get_extension_from_url(url)
-        if extension.lower() not in ['.jpg', '.jpeg', '.png']:
-            continue
-        response = requests.get(url)
-        response.raise_for_status()
-        image_name = url.split('/')[-1]
-        with open(os.path.join(save_dir, image_name), 'wb') as f:
-            f.write(response.content)
+        download_image(url, save_dir)
