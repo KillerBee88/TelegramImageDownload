@@ -6,12 +6,13 @@ from dotenv import load_dotenv
 from telegram import Bot
 import argparse
 
-load_dotenv()
-TG_API_KEY = os.getenv('TG_BOT_API')
-CHANNEL_ID = '@test_channel2406'
+
 
 
 def send_photo(bot, photo_path):
+    load_dotenv()
+    CHANNEL_ID = os.getenv('CHANNEL_ID')
+    
     with open(photo_path, 'rb') as photo:
         bot.send_photo(chat_id=CHANNEL_ID, photo=photo)
 
@@ -25,6 +26,9 @@ def publish_photo(bot, image_directory):
 
 
 def main(image_directory, hours):
+    load_dotenv()
+    TG_API_KEY = os.getenv('TG_BOT_API')
+    
     bot = Bot(token=TG_API_KEY)
     schedule.every(hours).hours.do(publish_photo, bot, image_directory)
     while True:
