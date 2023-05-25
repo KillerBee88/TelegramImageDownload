@@ -21,8 +21,3 @@ def download_image(url, save_dir='images'):
     image_name = url.split('/')[-1]
     with open(os.path.join(save_dir, image_name), 'wb') as f:
         f.write(response.content)
-
-
-def download_images(image_urls, save_dir='images'):
-    for url in image_urls:
-        download_image(url, save_dir)
