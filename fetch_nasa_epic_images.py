@@ -26,11 +26,13 @@ def fetch_nasa_epic_images(api_key, days):
 
 if __name__ == "__main__":
     load_dotenv()
-    API_KEY = os.getenv('NASA_API_KEY')
+    nasa_api_key = os.getenv('NASA_API_KEY')
     
     parser = argparse.ArgumentParser(description="Fetch NASA EPIC images")
     parser.add_argument('--days', type=int, default=10, help="Number of past days to fetch images for")
     args = parser.parse_args()
 
-    nasa_epic_image_links = fetch_nasa_epic_images(API_KEY, args.days)
-    common.download_images(nasa_epic_image_links)
+    nasa_epic_image_links = fetch_nasa_epic_images(nasa_api_key, args.days)
+    
+    for url in nasa_epic_image_links:
+        common.download_image(url)
