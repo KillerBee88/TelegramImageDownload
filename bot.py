@@ -13,25 +13,26 @@ def send_photo_to_channel(bot, chat_id, photo_url):
 
 def main():
     load_dotenv()
-    TG_API_KEY = os.getenv('TG_BOT_API')
-    NASA_API_KEY = os.getenv('NASA_API_KEY')
-    CHANNEL_ID = os.getenv('CHANNEL_ID')
+    tg_api_key = os.getenv('TG_BOT_API')
+    nasa_api_key = os.getenv('NASA_API_KEY')
+    chat_id = os.getenv('TG_CHAT_ID')
     
-    bot = Bot(token=TG_API_KEY)
-    chat_id = CHANNEL_ID
+    bot = Bot(token=tg_api_key)
 
-    get_fetch_functions = [fetch_nasa_apod_images, fetch_nasa_epic_images, fetch_spacex_last_launch]
-    fetch_func = random.choice(get_fetch_functions)
+    fetch_functions = [fetch_nasa_apod_images, fetch_nasa_epic_images, fetch_spacex_last_launch]
+    image_urls = []
 
-    if fetch_func == fetch_spacex_last_launch:
-        image_urls = fetch_func()
-    else:
-        image_urls = fetch_func(NASA_API_KEY, count=1)
-
-    print(f"Fetched image URLs: {image_urls}")
+    for fetch_func in fetch_functions:
+        if fetch_func == fetch_spacex_last_launch:
+            image_urls += fetch_func()
+        elif fetch_func == fetch_nasa_apod_images:
+            image_urls += fetch_func(nasa_api_key, count=1)
+        else:
+            image_urls += fetch_func(nasa_api_key, days=1)
     
     if image_urls:
-        send_photo_to_channel(bot, chat_id, image_urls[0])
+        random_image_url = random.choice(image_urls)
+        send_photo_to_channel(bot, chat_id, random_image_url)
 
 if __name__ == '__main__':
     main()
