@@ -19,17 +19,13 @@ def main():
     
     bot = Bot(token=tg_api_key)
 
-    fetch_functions = [fetch_nasa_apod_images, fetch_nasa_epic_images, fetch_spacex_last_launch]
     image_urls = []
 
-    for fetch_func in fetch_functions:
-        if fetch_func == fetch_spacex_last_launch:
-            image_urls += fetch_func()
-        elif fetch_func == fetch_nasa_apod_images:
-            image_urls += fetch_func(nasa_api_key, count=1)
-        else:
-            image_urls += fetch_func(nasa_api_key, days=1)
-    
+    image_urls = []
+    image_urls += fetch_nasa_apod_images(nasa_api_key, count=1)
+    image_urls += fetch_nasa_epic_images(nasa_api_key, days=1)
+    image_urls += fetch_spacex_last_launch()
+
     if image_urls:
         random_image_url = random.choice(image_urls)
         send_photo_to_channel(bot, chat_id, random_image_url)
