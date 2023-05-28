@@ -13,17 +13,13 @@ def fetch_spacex_last_launch_id():
     spacex_launch_images = response.json()
     return spacex_launch_images[-1].get('id')
 
-def fetch_spacex_last_launch(default_launch_id='5eb87d47ffd86e000604b38a'):
+if __name__ == "__main__":
+    default_launch_id = '5eb87d47ffd86e000604b38a'
     launch_id = fetch_spacex_last_launch_id()
     image_urls = fetch_spacex_launch_images(launch_id)
     
     if not image_urls:
         image_urls = fetch_spacex_launch_images(default_launch_id)
     
-    return image_urls
-
-if __name__ == "__main__":
-    image_links = fetch_spacex_last_launch()
-    
-    for url in image_links:
+    for url in image_urls:
         common.download_image(url)
